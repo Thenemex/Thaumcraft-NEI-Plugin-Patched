@@ -1,0 +1,16 @@
+[
+    {
+        "modid": "thaumcraftneipluginpatched",
+        "name": "Thaumcraft NEI Plugin : Patched",
+        "description": "A addon with bug-patches for the popular 1.7.10 mod Thaumcraft NEI Plugin, made by Jan2048",
+        "version": ${version},
+        "mcversion": ${mcversion},
+        "url": "",
+        "updateUrl": "",
+        "authorList": ["Thenemex"],
+        "credits": "Thanks for Jan2048 for making the original mod",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": ["thaumcraftneiplugin, CodeChickenCore"]
+    }
+]
