@@ -4,6 +4,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import thaumcraftneipluginpatched.model.nei.recipehandler.config.ConfigNEI;
 
 import static thaumcraftneipluginpatched.ThaumcraftNEIPluginPatched.dependencies;
 import static thaumcraftneipluginpatched.ThaumcraftNEIPluginPatched.modID;
@@ -21,7 +22,9 @@ public class ThaumcraftNEIPluginPatched {
     public void init(FMLInitializationEvent ignoredEvent) {}
 
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent ignoredEvent) {}
+    public void postInit(FMLPostInitializationEvent ignoredEvent) {
+        new ConfigNEI();
+    }
 
-    public static final String dependencies = "required-after:thaumcraftneiplugin@[1.7.10-1.7a,);required-after:NotEnoughItems@[1.0.5.120,)";
+    public static final String dependencies = "required-after:thaumcraftneiplugin;required-after:NotEnoughItems@[1.0.5.120,)";
 }
