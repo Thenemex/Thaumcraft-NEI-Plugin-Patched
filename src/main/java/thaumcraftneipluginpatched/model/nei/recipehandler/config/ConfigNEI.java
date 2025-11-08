@@ -8,7 +8,6 @@ import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapedRecipeHa
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapelessRecipeHandler;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.CrucibleRecipeHandler;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.InfusionRecipeHandler;
-import net.minecraft.client.Minecraft;
 import thaumcraftneipluginpatched.model.nei.recipehandler.PatchedArcaneShapedRecipeHandler;
 
 public class ConfigNEI implements IConfigureNEI {
@@ -34,10 +33,6 @@ public class ConfigNEI implements IConfigureNEI {
                 || ud instanceof ArcaneShapelessRecipeHandler
                 || ud instanceof CrucibleRecipeHandler
                 || ud instanceof InfusionRecipeHandler);
-    }
-
-    public static String getUsername() {
-        return Minecraft.getMinecraft().thePlayer.getDisplayName();
     }
 
     public String getName() {
