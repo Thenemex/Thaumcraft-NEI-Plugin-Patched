@@ -11,6 +11,6 @@
         "credits": "Thanks for Jan2048 for making the original mod",
         "logoFile": "",
         "screenshots": [],
-        "dependencies": ["thaumcraftneiplugin, Thaumcraft, CodeChickenCore, CodeChickenLib"]
+        "dependencies": ["NemexLib, thaumcraftneiplugin, Thaumcraft, CodeChickenCore, CodeChickenLib"]
     }
 ]

@@ -26,5 +26,5 @@ public class ThaumcraftNEIPluginPatched {
         new ConfigNEI();
     }
 
-    public static final String dependencies = "required-after:thaumcraftneiplugin;required-after:NotEnoughItems@[1.0.5.120,)";
+    public static final String dependencies = "required-after:thaumcraftneiplugin;required-after:NotEnoughItems@[1.0.5.120,);required-after:NemexLib@[1.3.1.0.1,)";
 }
