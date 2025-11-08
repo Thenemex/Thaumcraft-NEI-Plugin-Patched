@@ -5,6 +5,7 @@ import nemexlib.api.util.exceptions.ParameterIsNullOrEmpty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
+import thaumcraft.api.crafting.ShapelessArcaneRecipe;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
 import thaumcraftneipluginpatched.api.util.exceptions.InnerClassNotFound;
@@ -13,13 +14,19 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Utils {
 
+    protected Utils() {}
+
     protected static final String packageID = "com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.";
 
     public static boolean isRecipeValid(ShapedArcaneRecipe r) {
-        boolean valid = false;
         for (Object o : r.getInput())
             if (o != null) return true;
-        return valid;
+        return false;
+    }
+    public static boolean isRecipeValid(ShapelessArcaneRecipe r) {
+        for (Object o : r.getInput())
+            if (o != null) return true;
+        return false;
     }
 
     public static String getUsername() {
@@ -47,6 +54,19 @@ public class Utils {
             return (ShapedRecipeHandler.CachedShapedRecipe) getArcaneWandChachedRecipeClass()
                     .getConstructor(rod.getClass(), cap.getClass(), result.getClass(), boolean.class)
                     .newInstance(rod, cap, result, isScepter);
+        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException ignored) {
+            return null;
+        }
+    }
+
+    protected static Class<?> getArcaneShapelessCachedRecipeClass() {
+        return getInnerClassCachedRecipe("ArcaneShapelessRecipeHandler$ArcaneShapelessCachedRecipe");
+    }
+    public static ShapedRecipeHandler.CachedShapedRecipe getArcaneShapelessCachedRecipeInstance(ShapelessArcaneRecipe recipe) {
+        try {
+            return (ShapedRecipeHandler.CachedShapedRecipe) getArcaneShapelessCachedRecipeClass()
+                    .getConstructor(recipe.getClass())
+                    .newInstance(recipe);
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException ignored) {
             return null;
         }

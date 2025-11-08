@@ -9,6 +9,7 @@ import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapelessRecip
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.CrucibleRecipeHandler;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.InfusionRecipeHandler;
 import thaumcraftneipluginpatched.model.nei.recipehandler.PatchedArcaneShapedRecipeHandler;
+import thaumcraftneipluginpatched.model.nei.recipehandler.PatchedArcaneShapelessRecipeHandler;
 
 public class ConfigNEI implements IConfigureNEI {
 
@@ -22,6 +23,9 @@ public class ConfigNEI implements IConfigureNEI {
         PatchedArcaneShapedRecipeHandler arcaneShaped = new PatchedArcaneShapedRecipeHandler();
         API.registerRecipeHandler(arcaneShaped);
         API.registerUsageHandler(arcaneShaped);
+        PatchedArcaneShapelessRecipeHandler arcaneShapeless = new PatchedArcaneShapelessRecipeHandler();
+        API.registerRecipeHandler(arcaneShapeless);
+        API.registerUsageHandler(arcaneShapeless);
     }
 
     protected void removeHandlersFromPlugin() {
