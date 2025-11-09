@@ -1,4 +1,4 @@
-package thaumcraftneipluginpatched.model.nei.recipehandler;
+package thaumcraftneipluginpatched.nei.recipehandler;
 
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.CrucibleRecipeHandler;
 import net.minecraft.item.ItemStack;
@@ -10,6 +10,10 @@ import static thaumcraftneipluginpatched.api.util.Utils.getUsername;
 
 @SuppressWarnings("unused")
 public class PatchedCrucibleRecipeHandler extends CrucibleRecipeHandler {
+
+    public PatchedCrucibleRecipeHandler() {
+        super();
+    }
 
    public void loadCraftingRecipes(String outputId, Object... results) {
       if (outputId.equals(this.getOverlayIdentifier())) {

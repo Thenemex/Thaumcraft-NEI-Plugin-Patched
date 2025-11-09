@@ -1,4 +1,4 @@
-package thaumcraftneipluginpatched.model.nei.recipehandler;
+package thaumcraftneipluginpatched.nei.recipehandler;
 
 import com.djgiannuzz.thaumcraftneiplugin.nei.NEIHelper;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapedRecipeHandler;
@@ -14,7 +14,6 @@ import static thaumcraft.api.ThaumcraftApiHelper.isResearchComplete;
 import static thaumcraftneipluginpatched.api.util.Utils.getUsername;
 import static thaumcraftneipluginpatched.api.util.Utils.isRecipeValid;
 
-@SuppressWarnings("DataFlowIssue")
 public class PatchedArcaneShapedRecipeHandler extends ArcaneShapedRecipeHandler {
 
     @Override
@@ -23,7 +22,7 @@ public class PatchedArcaneShapedRecipeHandler extends ArcaneShapedRecipeHandler 
             for (Object o : ThaumcraftApi.getCraftingRecipes())
                 if (o instanceof ShapedArcaneRecipe) {
                     ShapedArcaneRecipe tcRecipe = (ShapedArcaneRecipe) o;
-                    CachedShapedRecipe recipe = Utils.getArcaneShapedCachedRecipeInstance(tcRecipe);
+                    CachedShapedRecipe recipe = Utils.getArcaneShapedCachedRecipeInstance(this, tcRecipe);
                     if (isRecipeValid(tcRecipe) && isResearchComplete(getUsername(), tcRecipe.getResearch())) {
                         recipe.computeVisuals();
                         this.arecipes.add(recipe);
@@ -43,9 +42,9 @@ public class PatchedArcaneShapedRecipeHandler extends ArcaneShapedRecipeHandler 
             ItemWandCasting wand = (ItemWandCasting) result.getItem();
             WandRod rod = wand.getRod(result);
             WandCap cap = wand.getCap(result);
-            if (!wand.isSceptre(result) || isResearchComplete(getUsername(), "SCEPTRE"))
+            if (!wand.isSceptre(result) || wand.isSceptre(result) && isResearchComplete(getUsername(), "SCEPTRE"))
                 if (isResearchComplete(getUsername(), cap.getResearch()) && isResearchComplete(getUsername(), rod.getResearch())) {
-                    CachedShapedRecipe recipe = Utils.getArcaneWandChachedRecipeInstance(rod, cap, result, false);
+                    CachedShapedRecipe recipe = Utils.getArcaneWandChachedRecipeInstance(this, rod, cap, result, wand.isSceptre(result));
                     recipe.computeVisuals();
                     this.arecipes.add(recipe);
                     this.aspectsAmount.add(NEIHelper.getWandAspectsWandCost(result));
@@ -57,7 +56,7 @@ public class PatchedArcaneShapedRecipeHandler extends ArcaneShapedRecipeHandler 
                     boolean condition = result.getItem().equals(tcRecipe.getRecipeOutput().getItem())
                             && result.getItemDamage() == tcRecipe.getRecipeOutput().getItemDamage();
                     if (condition) {
-                        CachedShapedRecipe recipe = Utils.getArcaneShapedCachedRecipeInstance(tcRecipe);
+                        CachedShapedRecipe recipe = Utils.getArcaneShapedCachedRecipeInstance(this, tcRecipe);
                         if (isRecipeValid(tcRecipe) && isResearchComplete(getUsername(), tcRecipe.getResearch())) {
                             recipe.computeVisuals();
                             this.arecipes.add(recipe);

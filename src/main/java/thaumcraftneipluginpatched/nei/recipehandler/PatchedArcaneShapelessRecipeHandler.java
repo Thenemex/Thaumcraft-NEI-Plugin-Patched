@@ -1,5 +1,6 @@
-package thaumcraftneipluginpatched.model.nei.recipehandler;
+package thaumcraftneipluginpatched.nei.recipehandler;
 
+import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapelessRecipeHandler;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.ThaumcraftApiHelper;
@@ -10,14 +11,14 @@ import static thaumcraftneipluginpatched.api.util.Utils.getUsername;
 import static thaumcraftneipluginpatched.api.util.Utils.isRecipeValid;
 
 
-public class PatchedArcaneShapelessRecipeHandler extends com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapelessRecipeHandler {
+public class PatchedArcaneShapelessRecipeHandler extends ArcaneShapelessRecipeHandler {
 
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals(this.getOverlayIdentifier())) { // Click on whole "Shapeless Arcane" section -> loads all recipes
             for (Object o : ThaumcraftApi.getCraftingRecipes())
                 if (o instanceof ShapelessArcaneRecipe) {
                     ShapelessArcaneRecipe tcRecipe = (ShapelessArcaneRecipe) o;
-                    CachedShapedRecipe recipe = Utils.getArcaneShapelessCachedRecipeInstance(tcRecipe);
+                    CachedShapelessRecipe recipe = Utils.getArcaneShapelessCachedRecipeInstance(this, tcRecipe);
                     if (isRecipeValid(tcRecipe) && ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.getResearch())) {
                         this.arecipes.add(recipe);
                         this.aspectsAmount.add(getAmounts(tcRecipe));
@@ -36,7 +37,7 @@ public class PatchedArcaneShapelessRecipeHandler extends com.djgiannuzz.thaumcra
                 boolean condition = result.getItem().equals(tcRecipe.getRecipeOutput().getItem())
                         && result.getItemDamage() == tcRecipe.getRecipeOutput().getItemDamage();
                 if (condition) {
-                    CachedShapedRecipe recipe = Utils.getArcaneShapelessCachedRecipeInstance(tcRecipe);
+                    CachedShapelessRecipe recipe = Utils.getArcaneShapelessCachedRecipeInstance(this, tcRecipe);
                     if (isRecipeValid(tcRecipe) && ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.getResearch())) {
                         this.arecipes.add(recipe);
                         this.aspectsAmount.add(getAmounts(tcRecipe));
