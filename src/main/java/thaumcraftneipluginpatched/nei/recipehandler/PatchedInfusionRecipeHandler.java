@@ -8,7 +8,6 @@ import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraftneipluginpatched.api.util.Utils;
 
 import static thaumcraftneipluginpatched.api.util.Utils.*;
-import static thaumcraftneipluginpatched.api.util.Utils.runInfusionCachedRecipe_compileVisuals;
 
 @SuppressWarnings({"unused"})
 public class PatchedInfusionRecipeHandler extends InfusionRecipeHandler {
