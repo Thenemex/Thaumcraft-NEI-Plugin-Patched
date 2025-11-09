@@ -57,6 +57,19 @@ public class Utils {
         return Minecraft.getMinecraft().thePlayer.getDisplayName();
     }
 
+    public static boolean compareItemMeta(ItemStack i, ItemStack i2, boolean checkMeta32767) {
+        if (!checkMeta32767)
+            return i.getItem().equals(i2.getItem()) && i.getItemDamage() == i2.getItemDamage();
+        else
+            return i.getItem().equals(i2.getItem()) && (i.getItemDamage() == 32767 || i2.getItemDamage() == 32767 || i.getItemDamage() == i2.getItemDamage());
+    }
+    public static boolean isItemStackIn(ItemStack input, boolean checkMeta32767, ItemStack ... array) {
+        for (ItemStack element : array)
+            if (compareItemMeta(input, element, checkMeta32767))
+                return true;
+        return false;
+    }
+
     protected static Class<?> getArcaneShapedCachedRecipeClass() {
         return getInnerClassCachedRecipe("ArcaneShapedRecipeHandler$ArcaneShapedCachedRecipe");
     }

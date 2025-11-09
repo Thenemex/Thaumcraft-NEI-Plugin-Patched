@@ -6,6 +6,7 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.crafting.CrucibleRecipe;
 
+import static thaumcraftneipluginpatched.api.util.Utils.compareItemMeta;
 import static thaumcraftneipluginpatched.api.util.Utils.getUsername;
 
 @SuppressWarnings("unused")
@@ -38,8 +39,7 @@ public class PatchedCrucibleRecipeHandler extends CrucibleRecipeHandler {
        for (Object o : ThaumcraftApi.getCraftingRecipes()) {
            if (o instanceof CrucibleRecipe) {
                CrucibleRecipe tcRecipe = (CrucibleRecipe) o;
-               boolean condition = result.getItem().equals(tcRecipe.getRecipeOutput().getItem())
-                       && result.getItemDamage() == tcRecipe.getRecipeOutput().getItemDamage();
+               boolean condition = compareItemMeta(result, tcRecipe.getRecipeOutput(), false);
                if (condition) {
                    CrucibleCachedRecipe recipe = new CrucibleCachedRecipe(tcRecipe);
                    if (ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.key) && recipe.isValid()) {
@@ -58,8 +58,7 @@ public class PatchedCrucibleRecipeHandler extends CrucibleRecipeHandler {
            if (o instanceof CrucibleRecipe) {
                CrucibleRecipe tcRecipe = (CrucibleRecipe) o;
                CrucibleCachedRecipe recipe = new CrucibleCachedRecipe(tcRecipe);
-               boolean condition = ingredient.getItem().equals(tcRecipe.getRecipeOutput().getItem())
-                       && ingredient.getItemDamage() == tcRecipe.getRecipeOutput().getItemDamage();
+               boolean condition = compareItemMeta(ingredient, tcRecipe.getRecipeOutput(), false);
                if (recipe.ingredient != null && recipe.ingredient.item != null && condition && ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.key) && recipe.isValid()) {
                    recipe.computeVisuals();
                    recipe.setIngredientPermutation(recipe.ingredient, ingredient);

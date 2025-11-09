@@ -7,8 +7,7 @@ import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.crafting.ShapelessArcaneRecipe;
 import thaumcraftneipluginpatched.api.util.Utils;
 
-import static thaumcraftneipluginpatched.api.util.Utils.getUsername;
-import static thaumcraftneipluginpatched.api.util.Utils.isRecipeValid;
+import static thaumcraftneipluginpatched.api.util.Utils.*;
 
 
 public class PatchedArcaneShapelessRecipeHandler extends ArcaneShapelessRecipeHandler {
@@ -34,8 +33,7 @@ public class PatchedArcaneShapelessRecipeHandler extends ArcaneShapelessRecipeHa
         for (Object o : ThaumcraftApi.getCraftingRecipes())
             if (o instanceof ShapelessArcaneRecipe) {
                 ShapelessArcaneRecipe tcRecipe = (ShapelessArcaneRecipe) o;
-                boolean condition = result.getItem().equals(tcRecipe.getRecipeOutput().getItem())
-                        && result.getItemDamage() == tcRecipe.getRecipeOutput().getItemDamage();
+                boolean condition = compareItemMeta(result, tcRecipe.getRecipeOutput(), false);
                 if (condition) {
                     CachedShapelessRecipe recipe = Utils.getArcaneShapelessCachedRecipeInstance(this, tcRecipe);
                     if (isRecipeValid(tcRecipe) && ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.getResearch())) {

@@ -11,8 +11,7 @@ import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraftneipluginpatched.api.util.Utils;
 
 import static thaumcraft.api.ThaumcraftApiHelper.isResearchComplete;
-import static thaumcraftneipluginpatched.api.util.Utils.getUsername;
-import static thaumcraftneipluginpatched.api.util.Utils.isRecipeValid;
+import static thaumcraftneipluginpatched.api.util.Utils.*;
 
 public class PatchedArcaneShapedRecipeHandler extends ArcaneShapedRecipeHandler {
 
@@ -53,8 +52,7 @@ public class PatchedArcaneShapedRecipeHandler extends ArcaneShapedRecipeHandler 
             for (Object o : ThaumcraftApi.getCraftingRecipes())
                 if (o instanceof ShapedArcaneRecipe) {
                     ShapedArcaneRecipe tcRecipe = (ShapedArcaneRecipe) o;
-                    boolean condition = result.getItem().equals(tcRecipe.getRecipeOutput().getItem())
-                            && result.getItemDamage() == tcRecipe.getRecipeOutput().getItemDamage();
+                    boolean condition = compareItemMeta(result, tcRecipe.getRecipeOutput(), false);
                     if (condition) {
                         CachedShapedRecipe recipe = Utils.getArcaneShapedCachedRecipeInstance(this, tcRecipe);
                         if (isRecipeValid(tcRecipe) && isResearchComplete(getUsername(), tcRecipe.getResearch())) {

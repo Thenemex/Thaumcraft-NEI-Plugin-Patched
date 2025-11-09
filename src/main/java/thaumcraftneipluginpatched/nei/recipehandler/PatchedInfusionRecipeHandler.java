@@ -8,6 +8,7 @@ import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraftneipluginpatched.api.util.Utils;
 
 import static thaumcraftneipluginpatched.api.util.Utils.*;
+import static thaumcraftneipluginpatched.api.util.Utils.runInfusionCachedRecipe_compileVisuals;
 
 @SuppressWarnings({"unused"})
 public class PatchedInfusionRecipeHandler extends InfusionRecipeHandler {
@@ -20,7 +21,7 @@ public class PatchedInfusionRecipeHandler extends InfusionRecipeHandler {
                     if (isRecipeValid(tcRecipe)) {
                         CachedRecipe recipe = Utils.getInfusionCachedRecipeInstance(this, tcRecipe);
                         if (ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.getResearch())) {
-                            Utils.runInfusionCachedRecipe_compileVisuals(recipe);
+                            runInfusionCachedRecipe_compileVisuals(recipe);
                             this.arecipes.add(recipe);
                             this.aspectsAmount.add(runInfusionCachedRecipe_getAspectList(recipe));
                         }
@@ -34,10 +35,28 @@ public class PatchedInfusionRecipeHandler extends InfusionRecipeHandler {
         InfusionRecipe tcRecipe = ThaumcraftApi.getInfusionRecipe(result);
         if (isRecipeValid(tcRecipe) && ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.getResearch())) {
             CachedRecipe recipe = Utils.getInfusionCachedRecipeInstance(this, tcRecipe);
-            Utils.runInfusionCachedRecipe_compileVisuals(recipe);
+            runInfusionCachedRecipe_compileVisuals(recipe);
             recipe.setIngredientPermutation(getInfusionCachedRecipe_ingredients(recipe), result);
             this.arecipes.add(recipe);
             this.aspectsAmount.add(runInfusionCachedRecipe_getAspectList(recipe));
         }
+    }
+
+    public void loadUsageRecipes(ItemStack ingredient) {
+        for (Object o : ThaumcraftApi.getCraftingRecipes())
+            if (o instanceof InfusionRecipe) {
+                InfusionRecipe tcRecipe = (InfusionRecipe) o;
+                if (isRecipeValid(tcRecipe)) {
+                    CachedRecipe recipe = Utils.getInfusionCachedRecipeInstance(this, tcRecipe);
+                    if (compareItemMeta(ingredient, tcRecipe.getRecipeInput(), false)
+                            || isItemStackIn(ingredient, true, tcRecipe.getComponents()))
+                        if (ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.getResearch())) {
+                            runInfusionCachedRecipe_compileVisuals(recipe);
+                            recipe.setIngredientPermutation(getInfusionCachedRecipe_ingredients(recipe), ingredient);
+                            this.arecipes.add(recipe);
+                            this.aspectsAmount.add(runInfusionCachedRecipe_getAspectList(recipe));
+                        }
+                }
+            }
     }
 }
