@@ -47,8 +47,7 @@ public class PatchedInfusionRecipeHandler extends InfusionRecipeHandler {
                 InfusionRecipe tcRecipe = (InfusionRecipe) o;
                 if (isRecipeValid(tcRecipe)) {
                     CachedRecipe recipe = Utils.getInfusionCachedRecipeInstance(this, tcRecipe);
-                    if (compareItemMeta(ingredient, tcRecipe.getRecipeInput(), false)
-                            || isItemStackIn(ingredient, true, tcRecipe.getComponents()))
+                    if (compareItemMeta(ingredient, tcRecipe.getRecipeInput(), false) || isItemStackIn(ingredient, true, tcRecipe.getComponents()))
                         if (ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.getResearch())) {
                             runInfusionCachedRecipe_compileVisuals(recipe);
                             recipe.setIngredientPermutation(getInfusionCachedRecipe_ingredients(recipe), ingredient);
