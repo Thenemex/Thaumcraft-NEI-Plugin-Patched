@@ -10,13 +10,13 @@ import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.InfusionRecipeHandle
 import nemexlib.api.util.exceptions.ParameterIsNullOrEmpty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
 import thaumcraft.api.crafting.ShapelessArcaneRecipe;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
+import thaumcraftneipluginpatched.api.util.exceptions.ErrorWhileCheckingRecipe;
 import thaumcraftneipluginpatched.api.util.exceptions.InnerClassNotFound;
 import thaumcraftneipluginpatched.api.util.exceptions.ParameterIsNotTheRightClass;
 
@@ -24,7 +24,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -83,8 +82,7 @@ public class Utils {
             constructor.setAccessible(true);
             return (ShapedRecipeHandler.CachedShapedRecipe) constructor.newInstance(handler, recipe);
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            logger.info("ArcaneShapedException =", e.getClass(), e.getMessage());
-            throw new NoSuchElementException();
+            throw new ErrorWhileCheckingRecipe("Arcane Shaped", e.getClass(), e.getMessage(), recipe.getRecipeOutput());
         }
     }
 
@@ -98,8 +96,7 @@ public class Utils {
             constructor.setAccessible(true);
             return (ShapedRecipeHandler.CachedShapedRecipe) constructor.newInstance(handler, rod, cap, result, isScepter);
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            logger.info("ArcaneWandException =", e.getClass(), e.getMessage());
-            throw new NoSuchElementException();
+            throw new ErrorWhileCheckingRecipe("Arcane Wand (Shaped)", e.getClass(), e.getMessage(), result);
         }
     }
 
@@ -112,8 +109,7 @@ public class Utils {
             constructor.setAccessible(true);
             return (ShapelessRecipeHandler.CachedShapelessRecipe) constructor.newInstance(handler, recipe);
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            logger.info("ArcaneShapelessException =", e.getClass(), e.getMessage());
-            throw new NoSuchElementException();
+            throw new ErrorWhileCheckingRecipe("Arcane Shapeless", e.getClass(), e.getMessage(), recipe.getRecipeOutput());
         }
     }
 
@@ -126,8 +122,16 @@ public class Utils {
             constructor.setAccessible(true);
             return (TemplateRecipeHandler.CachedRecipe) constructor.newInstance(handler, recipe);
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            logger.info("InfusionException =", e.getClass(), e.getMessage());
-            throw new NoSuchElementException(e.getMessage());
+            throw new ErrorWhileCheckingRecipe("Infusion", recipe.getRecipeInput(), e.getClass(), e.getMessage());
+        }
+    }
+    public static TemplateRecipeHandler.CachedRecipe getInfusionCachedRecipeAvoidingInstance(InfusionRecipeHandler handler, InfusionRecipe recipe) {
+        try {
+            Constructor<?> constructor = getInfusionCachedRecipeClass().getConstructors()[0];
+            constructor.setAccessible(true);
+            return (TemplateRecipeHandler.CachedRecipe) constructor.newInstance(handler, recipe);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            return null;
         }
     }
     public static void runInfusionCachedRecipe_compileVisuals(TemplateRecipeHandler.CachedRecipe r) {

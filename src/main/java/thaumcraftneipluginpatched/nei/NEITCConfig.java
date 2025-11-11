@@ -8,10 +8,8 @@ import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapedRecipeHa
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapelessRecipeHandler;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.CrucibleRecipeHandler;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.InfusionRecipeHandler;
-import thaumcraftneipluginpatched.nei.recipehandler.PatchedArcaneShapedRecipeHandler;
-import thaumcraftneipluginpatched.nei.recipehandler.PatchedArcaneShapelessRecipeHandler;
-import thaumcraftneipluginpatched.nei.recipehandler.PatchedCrucibleRecipeHandler;
-import thaumcraftneipluginpatched.nei.recipehandler.PatchedInfusionRecipeHandler;
+import thaumcraftneipluginpatched.config.Config;
+import thaumcraftneipluginpatched.nei.recipehandler.*;
 
 import static thaumcraftneipluginpatched.TCNEIPluginPatched.logger;
 
@@ -34,7 +32,7 @@ public class NEITCConfig implements IConfigureNEI {
         PatchedCrucibleRecipeHandler crucible = new PatchedCrucibleRecipeHandler();
         API.registerRecipeHandler(crucible);
         API.registerUsageHandler(crucible);
-        PatchedInfusionRecipeHandler infusion = new PatchedInfusionRecipeHandler();
+        PatchedInfusionRecipeHandler infusion = (Config.debugOn) ? new PatchedInfusionRecipeHandler() : new PatchedInfusionRecipeHandlerAvoiding();
         API.registerRecipeHandler(infusion);
         API.registerUsageHandler(infusion);
         logger.info("Successfully loaded new patches");
