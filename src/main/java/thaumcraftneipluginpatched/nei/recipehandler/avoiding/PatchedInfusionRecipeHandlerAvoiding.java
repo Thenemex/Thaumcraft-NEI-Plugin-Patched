@@ -1,10 +1,11 @@
-package thaumcraftneipluginpatched.nei.recipehandler;
+package thaumcraftneipluginpatched.nei.recipehandler.avoiding;
 
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraftneipluginpatched.api.util.Utils;
+import thaumcraftneipluginpatched.nei.recipehandler.patched.PatchedInfusionRecipeHandler;
 
 import static thaumcraftneipluginpatched.api.util.Utils.*;
 

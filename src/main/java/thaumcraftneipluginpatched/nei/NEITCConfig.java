@@ -9,7 +9,11 @@ import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapelessRecip
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.CrucibleRecipeHandler;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.InfusionRecipeHandler;
 import thaumcraftneipluginpatched.config.Config;
-import thaumcraftneipluginpatched.nei.recipehandler.*;
+import thaumcraftneipluginpatched.nei.recipehandler.avoiding.PatchedInfusionRecipeHandlerAvoiding;
+import thaumcraftneipluginpatched.nei.recipehandler.patched.PatchedArcaneShapedRecipeHandler;
+import thaumcraftneipluginpatched.nei.recipehandler.patched.PatchedArcaneShapelessRecipeHandler;
+import thaumcraftneipluginpatched.nei.recipehandler.patched.PatchedCrucibleRecipeHandler;
+import thaumcraftneipluginpatched.nei.recipehandler.patched.PatchedInfusionRecipeHandler;
 
 import static thaumcraftneipluginpatched.TCNEIPluginPatched.logger;
 

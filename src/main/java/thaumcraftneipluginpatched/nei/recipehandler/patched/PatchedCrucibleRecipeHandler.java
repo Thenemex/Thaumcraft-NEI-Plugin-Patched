@@ -1,4 +1,4 @@
-package thaumcraftneipluginpatched.nei.recipehandler;
+package thaumcraftneipluginpatched.nei.recipehandler.patched;
 
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.CrucibleRecipeHandler;
 import net.minecraft.item.ItemStack;
