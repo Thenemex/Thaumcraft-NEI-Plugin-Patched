@@ -10,7 +10,7 @@ import static thaumcraftneipluginpatched.TCNEIPluginPatched.dependencies;
 import static thaumcraftneipluginpatched.TCNEIPluginPatched.modID;
 
 @SuppressWarnings({"unused", "EmptyMethod"})
-@Mod(modid = modID, useMetadata = true, version = "1.0.0.2", dependencies = dependencies)
+@Mod(modid = modID, useMetadata = true, version = "1.0.0.3", dependencies = dependencies)
 public class TCNEIPluginPatched {
 
     public static final String modID = "thaumcraftneipluginpatched", modName = "TCNEIPluginPatched";
