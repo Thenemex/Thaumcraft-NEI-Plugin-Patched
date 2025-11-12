@@ -12,8 +12,9 @@ import static thaumcraftneipluginpatched.api.util.Utils.*;
 
 public class PatchedArcaneShapelessRecipeHandler extends ArcaneShapelessRecipeHandler {
 
+    @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
-        if (outputId.equals(this.getOverlayIdentifier())) { // Click on whole "Shapeless Arcane" section -> loads all recipes
+        if (outputId.equals(this.getOverlayIdentifier())) {
             for (Object o : ThaumcraftApi.getCraftingRecipes())
                 if (o instanceof ShapelessArcaneRecipe) {
                     ShapelessArcaneRecipe tcRecipe = (ShapelessArcaneRecipe) o;
@@ -23,12 +24,13 @@ public class PatchedArcaneShapelessRecipeHandler extends ArcaneShapelessRecipeHa
                         this.aspectsAmount.add(getAmounts(tcRecipe));
                     }
                 }
-        } else if (outputId.equals("item") && results.length == 1) { // Click on item
+        } else if (outputId.equals("item") && results.length == 1) {
             this.loadCraftingRecipes((ItemStack) results[0]);
         } else if (outputId.equals("item"))
             super.loadCraftingRecipes(outputId, results);
    }
 
+   @Override
     public void loadCraftingRecipes(ItemStack result) {
         for (Object o : ThaumcraftApi.getCraftingRecipes())
             if (o instanceof ShapelessArcaneRecipe) {
@@ -43,4 +45,5 @@ public class PatchedArcaneShapelessRecipeHandler extends ArcaneShapelessRecipeHa
                 }
             }
     }
+
 }

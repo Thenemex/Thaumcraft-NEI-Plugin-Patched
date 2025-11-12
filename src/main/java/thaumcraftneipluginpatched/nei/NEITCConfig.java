@@ -8,7 +8,7 @@ import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapedRecipeHa
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapelessRecipeHandler;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.CrucibleRecipeHandler;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.InfusionRecipeHandler;
-import thaumcraftneipluginpatched.config.Config;
+import thaumcraftneipluginpatched.nei.recipehandler.avoiding.PatchedArcaneShapelessRecipeHandlerAvoiding;
 import thaumcraftneipluginpatched.nei.recipehandler.avoiding.PatchedInfusionRecipeHandlerAvoiding;
 import thaumcraftneipluginpatched.nei.recipehandler.patched.PatchedArcaneShapedRecipeHandler;
 import thaumcraftneipluginpatched.nei.recipehandler.patched.PatchedArcaneShapelessRecipeHandler;
@@ -16,6 +16,7 @@ import thaumcraftneipluginpatched.nei.recipehandler.patched.PatchedCrucibleRecip
 import thaumcraftneipluginpatched.nei.recipehandler.patched.PatchedInfusionRecipeHandler;
 
 import static thaumcraftneipluginpatched.TCNEIPluginPatched.logger;
+import static thaumcraftneipluginpatched.config.Config.*;
 
 @SuppressWarnings("unused")
 public class NEITCConfig implements IConfigureNEI {
@@ -27,16 +28,16 @@ public class NEITCConfig implements IConfigureNEI {
     }
 
     protected void registerPatchedHandlers() {
-        PatchedArcaneShapedRecipeHandler arcaneShaped = new PatchedArcaneShapedRecipeHandler();
+        PatchedArcaneShapedRecipeHandler arcaneShaped = new PatchedArcaneShapedRecipeHandler(); // ToDo Avoiding instance
         API.registerRecipeHandler(arcaneShaped);
         API.registerUsageHandler(arcaneShaped);
-        PatchedArcaneShapelessRecipeHandler arcaneShapeless = new PatchedArcaneShapelessRecipeHandler();
+        PatchedArcaneShapelessRecipeHandler arcaneShapeless = (debugOn || debugArcaneShapeless) ? new PatchedArcaneShapelessRecipeHandler() : new PatchedArcaneShapelessRecipeHandlerAvoiding();
         API.registerRecipeHandler(arcaneShapeless);
         API.registerUsageHandler(arcaneShapeless);
         PatchedCrucibleRecipeHandler crucible = new PatchedCrucibleRecipeHandler();
         API.registerRecipeHandler(crucible);
         API.registerUsageHandler(crucible);
-        PatchedInfusionRecipeHandler infusion = (Config.debugOn) ? new PatchedInfusionRecipeHandler() : new PatchedInfusionRecipeHandlerAvoiding();
+        PatchedInfusionRecipeHandler infusion = (debugOn || debugInfusion) ? new PatchedInfusionRecipeHandler() : new PatchedInfusionRecipeHandlerAvoiding();
         API.registerRecipeHandler(infusion);
         API.registerUsageHandler(infusion);
         logger.info("Successfully loaded new patches");

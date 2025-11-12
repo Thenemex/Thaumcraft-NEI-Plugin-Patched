@@ -12,31 +12,24 @@ import static thaumcraftneipluginpatched.api.util.Utils.getUsername;
 @SuppressWarnings("unused")
 public class PatchedCrucibleRecipeHandler extends CrucibleRecipeHandler {
 
-    public PatchedCrucibleRecipeHandler() {
-        super();
+    public void loadCraftingRecipes(String outputId, Object... results) {
+        if (outputId.equals(this.getOverlayIdentifier())) {
+            for (Object o : ThaumcraftApi.getCraftingRecipes())
+                if (o instanceof CrucibleRecipe) {
+                    CrucibleRecipe tcRecipe = (CrucibleRecipe) o;
+                    CrucibleCachedRecipe recipe = new CrucibleCachedRecipe(tcRecipe);
+                    if (ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.key) && recipe.isValid()) {
+                        recipe.computeVisuals();
+                        this.arecipes.add(recipe);
+                        this.aspectsAmount.add(recipe.getAspectList());
+                    }
+                }
+        } else if (outputId.equals("item"))
+            this.loadCraftingRecipes((ItemStack)results[0]);
     }
 
-   public void loadCraftingRecipes(String outputId, Object... results) {
-      if (outputId.equals(this.getOverlayIdentifier())) {
-          for (Object o : ThaumcraftApi.getCraftingRecipes()) {
-              if (o instanceof CrucibleRecipe) {
-                  CrucibleRecipe tcRecipe = (CrucibleRecipe) o;
-                  CrucibleCachedRecipe recipe = new CrucibleCachedRecipe(tcRecipe);
-                  if (ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.key) && recipe.isValid()) {
-                      recipe.computeVisuals();
-                      this.arecipes.add(recipe);
-                      this.aspectsAmount.add(recipe.getAspectList());
-                  }
-              }
-          }
-      } else if (outputId.equals("item")) {
-         this.loadCraftingRecipes((ItemStack)results[0]);
-      }
-
-   }
-
-   public void loadCraftingRecipes(ItemStack result) {
-       for (Object o : ThaumcraftApi.getCraftingRecipes()) {
+    public void loadCraftingRecipes(ItemStack result) {
+       for (Object o : ThaumcraftApi.getCraftingRecipes())
            if (o instanceof CrucibleRecipe) {
                CrucibleRecipe tcRecipe = (CrucibleRecipe) o;
                boolean condition = compareItemMeta(result, tcRecipe.getRecipeOutput(), false);
@@ -49,12 +42,10 @@ public class PatchedCrucibleRecipeHandler extends CrucibleRecipeHandler {
                    }
                }
            }
-       }
-
-   }
+    }
 
    public void loadUsageRecipes(ItemStack ingredient) {
-       for (Object o : ThaumcraftApi.getCraftingRecipes()) {
+       for (Object o : ThaumcraftApi.getCraftingRecipes())
            if (o instanceof CrucibleRecipe) {
                CrucibleRecipe tcRecipe = (CrucibleRecipe) o;
                CrucibleCachedRecipe recipe = new CrucibleCachedRecipe(tcRecipe);
@@ -66,7 +57,5 @@ public class PatchedCrucibleRecipeHandler extends CrucibleRecipeHandler {
                    this.aspectsAmount.add(recipe.getAspectList());
                }
            }
-       }
-
    }
 }

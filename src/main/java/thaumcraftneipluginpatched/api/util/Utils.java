@@ -43,7 +43,7 @@ public class Utils {
         return false;
     }
     public static boolean isRecipeValid(ShapelessArcaneRecipe r) {
-        if (r == null) return false;
+        if (r == null || r.getRecipeOutput() == null || r.getInput().isEmpty()) return false;
         for (Object o : r.getInput())
             if (o != null) return true;
         return false;
@@ -110,6 +110,15 @@ public class Utils {
             return (ShapelessRecipeHandler.CachedShapelessRecipe) constructor.newInstance(handler, recipe);
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
             throw new ErrorWhileCheckingRecipe("Arcane Shapeless", e.getClass(), e.getMessage(), recipe.getRecipeOutput());
+        }
+    }
+    public static ShapelessRecipeHandler.CachedShapelessRecipe getArcaneShapelessCachedRecipeAvoidingInstance(ArcaneShapelessRecipeHandler handler, ShapelessArcaneRecipe recipe) {
+        try {
+            Constructor<?> constructor = getArcaneShapelessCachedRecipeClass().getConstructors()[0];
+            constructor.setAccessible(true);
+            return (ShapelessRecipeHandler.CachedShapelessRecipe) constructor.newInstance(handler, recipe);
+        } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
+            return null;
         }
     }
 
