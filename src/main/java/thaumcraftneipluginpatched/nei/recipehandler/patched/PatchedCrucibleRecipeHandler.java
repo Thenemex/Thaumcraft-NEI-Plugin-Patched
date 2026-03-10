@@ -48,13 +48,16 @@ public class PatchedCrucibleRecipeHandler extends CrucibleRecipeHandler {
        for (Object o : ThaumcraftApi.getCraftingRecipes())
            if (o instanceof CrucibleRecipe) {
                CrucibleRecipe tcRecipe = (CrucibleRecipe) o;
-               CrucibleCachedRecipe recipe = new CrucibleCachedRecipe(tcRecipe);
-               boolean condition = compareItemMeta(ingredient, tcRecipe.getRecipeOutput(), false);
-               if (recipe.ingredient != null && recipe.ingredient.item != null && condition && ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.key) && recipe.isValid()) {
-                   recipe.computeVisuals();
-                   recipe.setIngredientPermutation(recipe.ingredient, ingredient);
-                   this.arecipes.add(recipe);
-                   this.aspectsAmount.add(recipe.getAspectList());
+               if (tcRecipe.catalyst instanceof ItemStack) { // ToDo Compatibility with ArrayList if possible
+                   ItemStack input = (ItemStack) tcRecipe.catalyst;
+                   CrucibleCachedRecipe recipe = new CrucibleCachedRecipe(tcRecipe);
+                   boolean condition = compareItemMeta(ingredient, input, true);
+                   if (recipe.ingredient != null && recipe.ingredient.item != null && condition && ThaumcraftApiHelper.isResearchComplete(getUsername(), tcRecipe.key) && recipe.isValid()) {
+                       recipe.computeVisuals();
+                       recipe.setIngredientPermutation(recipe.ingredient, ingredient);
+                       this.arecipes.add(recipe);
+                       this.aspectsAmount.add(recipe.getAspectList());
+                   }
                }
            }
    }
